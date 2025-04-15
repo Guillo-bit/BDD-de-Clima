@@ -71,3 +71,9 @@ Esto modificará el archivo `pubspec.yaml` de forma automática, sin necesidad d
 ![Image](https://github.com/user-attachments/assets/6117003b-8d11-4176-9b68-108576dfccbe)
 
 ![Image](https://github.com/user-attachments/assets/2ae81d8b-ca08-4611-b182-8a2826a24ed1)
+
+## Comentarios Adicionales
+
+Se eligió a `SharedPreferences` en lugar de `SQLite`, debido a que este último requería la creación de tablas, mientras que las Preferencias Compartidas proporcionan simplemente métodos que le permiten al usuario crear y borrar climas de ciudades favoritas.}
+
+Finalmente, en caso de que se quiera correr la App mediante un emulador de Android Studio, hay la posibilidad que surja un error relacionado con el fichero `settings.gradle`, alojado dentro de la carpeta `android`. Esto tiene que ver con la versión de `com.andoid.application` dentro de los `plugins` de este archivo; la versión mínima requerida para compilar la App en este escenario, es teniendo, al menos, una versión `8.2.1`; simplemente, se debe reemplazar el número de esta línea, con el mencionado. De esta forma, se correrá el proyecto sin problema alguno.
