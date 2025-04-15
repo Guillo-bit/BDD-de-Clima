@@ -70,6 +70,7 @@ Esto modificará el archivo `pubspec.yaml` de forma automática, sin necesidad d
 
 ![Image](https://github.com/user-attachments/assets/2ae81d8b-ca08-4611-b182-8a2826a24ed1)
 
+![Image](https://github.com/user-attachments/assets/5e53a6ea-1aba-49af-abd6-4df41b9bf3fb)
 ## Comentarios Adicionales
 
 Se eligió a `SharedPreferences` en lugar de `SQLite`, debido a que este último requería la creación de tablas, mientras que las Preferencias Compartidas proporcionan simplemente métodos que le permiten al usuario crear y borrar climas de ciudades favoritas.}
