@@ -58,9 +58,9 @@ Esto modificará el archivo `pubspec.yaml` de forma automática, sin necesidad d
 
 ## Demostrciones de la funcionalidad de la App
 
-![Image](https://github.com/user-attachments/assets/2ae81d8b-ca08-4611-b182-8a2826a24ed1)
-
 ![Image](https://github.com/user-attachments/assets/749f036b-f682-417c-90ac-47509948c791)
+
+![Image](https://github.com/user-attachments/assets/2ae81d8b-ca08-4611-b182-8a2826a24ed1)
 
 ![Image](https://github.com/user-attachments/assets/171923e4-d870-4240-b2b0-9225586e0d5b)
 
