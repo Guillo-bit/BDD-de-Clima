@@ -10,14 +10,22 @@ jobs:
     runs-on: self-hosted
 
     steps:
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
 
-      - name: Deploy
+      - name: Setup SSH
         run: |
-          cd /proyecto/BDD-de-Clima
-          git pull origin main
-          chmod +x run.sh
-          ./run.sh
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+            cd /home/Guillo/proyecto/BDD-de-Clima
+            git pull origin main
+            chmod +x run.sh
+            ./run.sh
+          EOF
