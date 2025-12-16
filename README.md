@@ -76,3 +76,73 @@ Esto modificará el archivo `pubspec.yaml` de forma automática, sin necesidad d
 Se eligió a `SharedPreferences` en lugar de `SQLite`, debido a que este último requería la creación de tablas, mientras que las Preferencias Compartidas proporcionan simplemente métodos que le permiten al usuario crear y borrar climas de ciudades favoritas.}
 
 Finalmente, en caso de que se quiera correr la App mediante un emulador de Android Studio, hay la posibilidad que surja un error relacionado con el fichero `settings.gradle`, alojado dentro de la carpeta `android`. Esto tiene que ver con la versión de `com.andoid.application` dentro de los `plugins` de este archivo; la versión mínima requerida para compilar la App en este escenario, es teniendo, al menos, una versión `8.2.1`; simplemente, se debe reemplazar el número de esta línea, con el mencionado. De esta forma, se correrá el proyecto sin problema alguno.
+
+## CI/CD – Despliegue automático con GitHub Actions
+
+### Objetivo
+Implementar un flujo de trabajo de **Integración y Despliegue Continuo (CI/CD)** usando **GitHub Actions**, que permita **desplegar automáticamente la aplicación** en un servidor **Ubuntu** mediante una **conexión SSH segura**, cada vez que se realiza un `push` a la rama `main`.
+
+---
+
+### Tecnologías utilizadas
+- GitHub Actions  
+- Runner self-hosted en Ubuntu 24.04  
+- SSH con llaves ED25519  
+- Git  
+- Flutter (aplicación de ejemplo)
+
+---
+
+### ¿Cómo funciona el despliegue?
+1. Se realiza un `push` a la rama **main** del repositorio.
+2. GitHub Actions ejecuta el workflow `deploy.yml`.
+3. El **runner self-hosted** instalado en el servidor Ubuntu:
+   - Clona o actualiza el repositorio (`git pull`)
+   - Instala dependencias
+   - Compila y ejecuta la aplicación automáticamente
+4. El despliegue se completa sin intervención manual.
+
+---
+
+### Seguridad y buenas prácticas
+- Se utilizaron **llaves SSH ED25519** para autenticación segura.
+- La **clave privada nunca se sube al repositorio**.
+- Las llaves se almacenan y gestionan mediante **GitHub Secrets**.
+- Permisos correctos en el servidor:
+  - `~/.ssh` → `700`
+  - `id_ed25519` → `600`
+- Autenticación SSH **sin contraseña**.
+- Información sensible (IP, usuario, rutas) **no expuesta** en el repositorio.
+
+---
+
+### Workflow CI/CD
+El archivo `.github/workflows/deploy.yml`:
+- Se activa automáticamente al hacer `push` en `main`.
+- Usa un **runner self-hosted**.
+- Ejecuta comandos remotos para actualizar y desplegar la aplicación.
+- Permite verificar el estado del despliegue desde la pestaña **Actions** de GitHub.
+
+---
+
+### Evidencia del funcionamiento
+Se adjuntan capturas donde se observa:
+- Runner activo y conectado a GitHub.
+<img width="986" height="278" alt="Runner" src="https://github.com/user-attachments/assets/a5322080-888d-4b78-8439-e4dc221eb276" />
+- Ejecución exitosa del workflow.
+<img width="1622" height="1167" alt="Todos los Intentos" src="https://github.com/user-attachments/assets/ba9f6b1c-7819-48ce-b02d-3eb4d6cde80d" />
+- Compilación e instalación automática de la aplicación.
+<img width="747" height="472" alt="image" src="https://github.com/user-attachments/assets/67b1d53c-d8e3-4a84-8484-4402d4886e3d" />
+
+---
+
+### Problemas encontrados y soluciones
+- **Errores de autenticación SSH**: solucionados ajustando permisos de las llaves.
+- **Error de display en Linux**: se adaptó el despliegue a dispositivo Android.
+- **Advertencias de Gradle/Kotlin**: documentadas, no bloquean el despliegue.
+
+---
+
+### Conclusión
+El flujo CI/CD fue implementado con éxito.  
+Cada cambio enviado a la rama `main` se despliega automáticamente en el servidor Ubuntu mediante una conexión SSH segura, cumpliendo con los principios de automatización, seguridad y buenas prácticas.
